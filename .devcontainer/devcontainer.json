@@ -1,0 +1,101 @@
+{
+  "name": "Accessibility Rails Components Library",
+  "image": "mcr.microsoft.com/devcontainers/ruby:1-3.2-bullseye",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "18"
+    },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  "services": {
+    "postgres": {
+      "image": "postgres:15",
+      "restart": "unless-stopped",
+      "environment": {
+        "POSTGRES_PASSWORD": "accessibility",
+        "POSTGRES_USER": "accessibility",
+        "POSTGRES_DB": "accessibility_components_development"
+      },
+      "volumes": [
+        "postgres-data:/var/lib/postgresql/data"
+      ],
+      "ports": [
+        "5432:5432"
+      ]
+    }
+  },
+
+  "forwardPorts": [3000, 5432, 3001],
+  "portsAttributes": {
+    "3000": {
+      "label": "Rails App",
+      "onAutoForward": "openPreview"
+    },
+    "3001": {
+      "label": "ViewComponent Previews",
+      "onAutoForward": "openPreview"
+    },
+    "5432": {
+      "label": "PostgreSQL"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.ruby",
+        "koichisasada.vscode-rdbg",
+        "castwide.solargraph",
+        "bradlc.vscode-tailwindcss",
+        "heybourn.headwind",
+        "ms-vscode.vscode-json",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "ms-vsliveshare.vsliveshare",
+        "formulahendry.auto-rename-tag",
+        "christian-kohler.path-intellisense",
+        "ms-vscode.vscode-typescript-next",
+        "deque-systems.vscode-axe-linter",
+        "webhint.vscode-webhint"
+      ],
+      "settings": {
+        "ruby.intellisense": "rubyLsp",
+        "ruby.format": "rubocop",
+        "ruby.lint": {
+          "rubocop": {
+            "useBundler": true
+          }
+        },
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2,
+        "files.insertFinalNewline": true,
+        "files.trimTrailingWhitespace": true,
+        "tailwindCSS.experimental.classRegex": [
+          ["class_names\\(([^)]*)\\)", "'([^']*)'"],
+          ["class_names\\(([^)]*)\\)", "\"([^\"]*)\""]
+        ],
+        "emmet.includeLanguages": {
+          "erb": "html"
+        }
+      }
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  "remoteEnv": {
+    "RAILS_ENV": "development",
+    "DATABASE_URL": "postgresql://accessibility:accessibility@postgres:5432/accessibility_components_development",
+    "DATABASE_USER": "accessibility",
+    "DATABASE_PASSWORD": "accessibility",
+    "DATABASE_HOST": "postgres",
+    "DATABASE_PORT": "5432"
+  },
+
+  "remoteUser": "vscode",
+
+  "workspaceFolder": "/workspaces/accessibility-rails-components"
+}

@@ -10,22 +10,37 @@ This is the **Accessible Rails Components Library** - a comprehensive collection
 
 ## Quick Start
 
-### Prerequisites
+### GitHub Codespaces (Recommended)
+**One-click accessibility-first development environment:**
+
+1. **Open in Codespaces**: Click "Code" > "Codespaces" > "Create codespace on main"
+2. **Automatic setup**: The `.devcontainer` will automatically:
+   - Set up Ruby 3.2.0 + Rails 7.1 environment
+   - Launch PostgreSQL 15 for production-ready database
+   - Install all gems including accessibility testing tools
+   - Set up Node.js, npm, and build tools
+   - Configure VS Code with accessibility extensions
+   - Install axe-core CLI for accessibility auditing
+3. **Start developing**: 
+   - Main app: `https://[codespace-name]-3000.app.github.dev`
+   - ViewComponent previews: `https://[codespace-name]-3000.app.github.dev/rails/view_components`
+
+```bash
+# Once Codespace is ready:
+bundle exec rails server -b 0.0.0.0         # Start main server
+axe http://localhost:3000                    # Run accessibility audit
+```
+
+### Local Development (Alternative)
 - Ruby 3.2+
 - Rails 7.1+
 - Node.js 16+ (for Stimulus and TailwindCSS)
-- Yarn package manager
+- PostgreSQL 15+
 
-### Initial Setup
 ```bash
-# Generate new Rails application structure (if not already present)
-rails new . --skip-git --force
-
-# Install Ruby dependencies
+# Install dependencies
 bundle install
-
-# Install JavaScript dependencies
-yarn install
+npm install
 
 # Setup database
 rails db:create
@@ -80,10 +95,33 @@ rails server
 
 ## Development Commands
 
-### Setup & Installation
+### GitHub Codespaces Commands
+```bash
+# Server management
+bundle exec rails server -b 0.0.0.0        # Start Rails server (accessible externally)
+
+# Component development
+rails generate component AccessibleCard title:string --preview
+open https://$(echo $CODESPACE_NAME)-3000.app.github.dev/rails/view_components
+
+# Accessibility testing
+axe https://$(echo $CODESPACE_NAME)-3000.app.github.dev
+axe https://$(echo $CODESPACE_NAME)-3000.app.github.dev/rails/view_components
+bundle exec rspec spec/accessibility/
+
+# Database operations
+rails db:migrate
+rails console
+
+# Code quality
+bundle exec standard
+bundle exec rspec
+```
+
+### Local Development Setup
 ```bash
 bundle install                    # Install Ruby dependencies
-yarn install                     # Install JavaScript dependencies
+npm install                      # Install JavaScript dependencies  
 rails db:create db:migrate       # Setup database
 ```
 
