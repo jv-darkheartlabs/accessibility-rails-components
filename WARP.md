@@ -4,9 +4,9 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-This is the **Accessible Rails Components Library** - a comprehensive collection of Rails ViewComponents built with accessibility-first design principles. The project ensures WCAG 2.1 AA compliance while providing production-ready components for inclusive web development.
+This is the **Accessible Rails Components Library** - a learning project demonstrating Rails ViewComponents with accessibility-first design principles. The project explores WCAG 2.1 AA compliance through component examples and accessibility testing integration.
 
-**Current Status**: This appears to be a planned architecture repository containing documentation but requires Rails application structure generation.
+**Current Status**: This is a demonstration/learning repository with Rails application structure, accessibility component examples, and development tooling.
 
 ## Quick Start
 
