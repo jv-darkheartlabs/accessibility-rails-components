@@ -1,0 +1,7 @@
+@baseUrl = http://localhost:3000
+
+### Home
+GET {{baseUrl}}/
+
+### ViewComponent previews
+GET {{baseUrl}}/rails/view_components
