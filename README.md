@@ -9,6 +9,26 @@
 
 ---
 
+## 🖼️ Visual Preview
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  [Screenshot placeholder: Component preview grid]          │
+│                                                             │
+│  ┌───────┐  ┌───────┐  ┌───────┐  ┌───────┐              │
+│  │ Form  │  │ Modal │  │ Table │  │ Alert │              │
+│  └───────┘  └───────┘  └───────┘  └───────┘              │
+│                                                             │
+│  • Keyboard navigation demo                                 │
+│  • VoiceOver/NVDA screen reader compatibility               │
+│  • High contrast theme toggle                               │
+└─────────────────────────────────────────────────────────────┘
+
+To see the real thing: spin up a Codespace or open /rails/view_components
+```
+
+---
+
 ## 🌟 Impact Statement
 
 This project stems from **13+ years of community leadership with Girls Who Code** and a deep commitment to making technology accessible to everyone. By providing production-ready accessible components, we're removing barriers for developers to create inclusive web applications while ensuring people with disabilities can fully participate in the digital world.
@@ -23,6 +43,11 @@ This project stems from **13+ years of community leadership with Girls Who Code*
 - **Component previews:** `/rails/view_components` (once the server is running)
 
 See `samples/` for a short walkthrough script and demo request URLs.
+
+### 💡 At a glance
+- **Run time:** ~2 minutes for Codespace setup
+- **Tech stack:** Rails 7 + ViewComponent + TailwindCSS + Stimulus
+- **What you'll see:** 15+ accessible components with keyboard navigation + screen reader support
 
 ---
 
