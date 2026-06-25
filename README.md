@@ -304,3 +304,54 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Built with ❤️ for an accessible web by [Jennifer Picado](https://linkedin.com/in/jennifer-picado)**
 
 *Seeking opportunities in New Zealand's inclusive tech community - available for Rails + accessibility consulting and full-time positions.*
+
+
+## Problem
+Teams often struggle to ship inclusive UI components that consistently meet accessibility standards.
+
+## Solution
+A Rails component library focused on WCAG-aligned design patterns, reusable UI primitives, and accessibility-first development workflows.
+
+## Architecture Diagram
+```mermaid
+flowchart LR
+  App["Rails App"] --> Components["Accessible View Components"]
+  Components --> UI["Rendered UI"]
+  Components --> Tests["A11y + component test suite"]
+  UI --> Users["Keyboard / screen-reader users"]
+```
+
+## Tech Stack
+- Ruby on Rails
+- ViewComponent
+- Stimulus
+- TailwindCSS
+- RSpec / accessibility testing
+
+## Setup Instructions
+```bash
+bundle install
+rails db:setup
+rails server
+```
+
+## Testing
+- rails test
+- Run accessibility audit workflow documented in repository
+
+## ANZSCO 261312 Competency Evidence
+- Web application architecture with reusable component systems.
+- Accessibility-centered engineering practices.
+- Quality assurance and maintainable frontend-backend integration.
+
+## Commit Convention
+Use Conventional Commits for presentation clarity:
+- `feat(scope): add new user-facing capability`
+- `fix(scope): resolve functional defect`
+- `test(scope): add or improve automated tests`
+- `docs(readme): improve project documentation`
+
+## Evidence Map
+- `app/components/`
+- `docs/`
+- `README.md sections and usage examples`
