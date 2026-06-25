@@ -9,6 +9,12 @@
 
 ---
 
+
+## ANZSCO 261312 Skills Snapshot
+- Enterprise web application architecture with reusable Rails component patterns.
+- Accessibility-first implementation aligned to real product requirements.
+- Quality-focused engineering through testability and maintainable documentation.
+
 ## 🌟 Impact Statement
 
 This project stems from **13+ years of community leadership with Girls Who Code** and a deep commitment to making technology accessible to everyone. By providing production-ready accessible components, we're removing barriers for developers to create inclusive web applications while ensuring people with disabilities can fully participate in the digital world.
