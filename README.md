@@ -31,8 +31,9 @@ rails server
 ```
 
 ## Testing
-- `rails test`
-- Run accessibility checks documented in `docs/`.
+- `bundle install && bundle exec ruby -c app/components/accessible_button_component.rb`
+- Component syntax and dependency checks run in `.github/workflows/ci.yml`
+- Accessibility checks documented in `docs/`
 
 ## ANZSCO 261312 Competency Evidence
 - **Software design and development**: modular component architecture for scalable UI systems.
