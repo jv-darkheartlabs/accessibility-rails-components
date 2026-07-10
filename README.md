@@ -1,5 +1,9 @@
 # Accessibility Rails Components
-Portfolio repository aligned to ANZSCO 261312 (Developer Programmer), focused on reusable Rails UI components with accessibility-first implementation standards.
+
+Rails ViewComponent library implementing WCAG 2.1 AA accessible UI patterns with repeatable setup, test, and documentation workflows.
+
+**Live demo:** [accessibility-rails-components.onrender.com](https://accessibility-rails-components.onrender.com)  
+**Tech spec:** [docs/TECH_SPEC.md](docs/TECH_SPEC.md)
 
 ## Problem
 Teams frequently need reusable UI building blocks that remain accessible, testable, and maintainable across product releases.
@@ -46,5 +50,12 @@ Use Conventional Commits for presentation clarity:
 - `app/components/`
 - `app/`
 - `config/`
-- `docs/`
+- `docs/TECH_SPEC.md`
+- `docs/adr/`
 - `Gemfile`
+
+---
+
+**Maintained by:** [Dark Heart Labs](https://darkheartlabs.technology)  
+**Author:** Jennifer ([@jv-darkheartlabs](https://github.com/jv-darkheartlabs))  
+**Site:** https://darkheartlabs.technology
