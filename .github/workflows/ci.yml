@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  validate:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,4 +14,4 @@ jobs:
           ruby-version: "3.2"
           bundler-cache: true
       - run: bundle install
-      - run: find app -name '*.rb' -print0 | xargs -0 -n1 ruby -c
+      - run: bundle exec rspec

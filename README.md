@@ -31,9 +31,12 @@ rails server
 ```
 
 ## Testing
-- `bundle install && bundle exec ruby -c app/components/accessible_button_component.rb`
-- Component syntax and dependency checks run in `.github/workflows/ci.yml`
-- Accessibility checks documented in `docs/`
+```bash
+bundle install
+bundle exec rspec
+```
+
+Component specs cover WCAG-oriented markup (`aria-label`, `role="dialog"`, disabled state) and parameter validation. CI runs `bundle exec rspec` on push.
 
 ## ANZSCO 261312 Competency Evidence
 - **Software design and development**: modular component architecture for scalable UI systems.
