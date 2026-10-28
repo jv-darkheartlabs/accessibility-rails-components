@@ -1,22 +1,22 @@
 # Accessible Modal Component
-# WCAG 2.1 AA compliant modal with focus trapping and keyboard navigation
 class AccessibleModalComponent < ViewComponent::Base
   renders_one :header
   renders_one :body
   renders_one :footer
-  
-  attr_reader :id, :title, :size, :closable, :close_on_backdrop, :aria_labelledby, :aria_describedby
-  
+
+  attr_reader :id, :title, :size, :closable, :close_on_backdrop, :aria_labelledby, :aria_describedby, :trigger_text
+
   SIZES = %w[small medium large fullscreen].freeze
-  
+
   def initialize(
     id:,
     title:,
-    size: 'medium',
+    size: "medium",
     closable: true,
     close_on_backdrop: true,
     aria_labelledby: nil,
     aria_describedby: nil,
+    trigger_text: nil,
     **html_attributes
   )
     @id = id
@@ -26,114 +26,89 @@ class AccessibleModalComponent < ViewComponent::Base
     @close_on_backdrop = close_on_backdrop
     @aria_labelledby = aria_labelledby || "#{id}-title"
     @aria_describedby = aria_describedby
+    @trigger_text = trigger_text
     @html_attributes = html_attributes
-    
+
     validate_params!
   end
-  
+
   def call
-    content_tag(:div, class: 'modal-backdrop', id: "#{id}-backdrop", 
-                'data-controller': 'accessible-modal',
-                'data-accessible-modal-closable-value': closable,
-                'data-accessible-modal-close-on-backdrop-value': close_on_backdrop,
-                'data-action': backdrop_actions) do
-      
-      content_tag(:div, class: modal_classes, id: id, **modal_attributes) do
-        safe_join([
-          modal_header,
-          modal_body,
-          modal_footer
-        ].compact)
-      end
+    content_tag(:div, class: "modal-component") do
+      safe_join([
+        trigger_text.present? ? trigger_button(trigger_text) : nil,
+        modal_backdrop
+      ].compact)
     end
   end
-  
+
   def trigger_button(text, **button_attributes)
     button_tag(
       text,
-      type: 'button',
-      'data-action': 'click->accessible-modal#open',
-      'aria-haspopup': 'dialog',
+      type: "button",
+      class: "btn btn--secondary",
+      "data-modal-open": id,
+      "aria-haspopup": "dialog",
       **button_attributes
     )
   end
-  
+
   private
-  
+
+  def modal_backdrop
+    content_tag(:div, class: "modal-backdrop", id: "#{id}-backdrop") do
+      content_tag(:div, class: modal_classes, id: id, **modal_attributes) do
+        safe_join([modal_header, modal_body, modal_footer].compact)
+      end
+    end
+  end
+
   def modal_attributes
     {
-      role: 'dialog',
-      'aria-modal': 'true',
-      'aria-labelledby': aria_labelledby,
-      'aria-describedby': aria_describedby,
-      'aria-hidden': 'true',
-      tabindex: '-1',
-      'data-accessible-modal-target': 'modal',
+      role: "dialog",
+      "aria-modal": "true",
+      "aria-labelledby": aria_labelledby,
+      "aria-describedby": aria_describedby,
+      "aria-hidden": "true",
+      tabindex: "-1",
       **@html_attributes
     }.compact
   end
-  
+
   def modal_classes
-    classes = ['modal', 'accessible-modal']
-    classes << "modal--#{size}"
-    classes.join(' ')
+    ["modal", "accessible-modal", "modal--#{size}"].join(" ")
   end
-  
-  def backdrop_actions
-    actions = []
-    actions << 'click->accessible-modal#handleBackdropClick' if close_on_backdrop
-    actions << 'keydown->accessible-modal#handleKeydown'
-    actions.join(' ')
-  end
-  
+
   def modal_header
     return unless title.present? || header?
-    
-    content_tag(:div, class: 'modal__header') do
-      header_content = if header?
-        header
-      else
-        content_tag(:h2, title, class: 'modal__title', id: aria_labelledby)
-      end
-      
-      if closable
-        safe_join([
-          header_content,
-          close_button
-        ])
-      else
-        header_content
-      end
+
+    content_tag(:div, class: "modal__header") do
+      header_content = header? ? header : content_tag(:h2, title, class: "modal__title", id: aria_labelledby)
+      closable ? safe_join([header_content, close_button]) : header_content
     end
   end
-  
+
   def modal_body
     return unless body?
-    
-    content_tag(:div, class: 'modal__body', id: aria_describedby) do
-      body
-    end
+
+    content_tag(:div, class: "modal__body", id: aria_describedby) { body }
   end
-  
+
   def modal_footer
     return unless footer?
-    
-    content_tag(:div, class: 'modal__footer') do
-      footer
-    end
+
+    content_tag(:div, class: "modal__footer") { footer }
   end
-  
+
   def close_button
     button_tag(
-      '×',
-      type: 'button',
-      class: 'modal__close',
-      'aria-label': 'Close modal',
-      'data-action': 'click->accessible-modal#close',
-      'data-accessible-modal-target': 'closeButton'
+      "×",
+      type: "button",
+      class: "modal__close",
+      "aria-label": "Close modal",
+      "data-modal-close": id
     )
   end
-  
+
   def validate_params!
     raise ArgumentError, "Invalid size: #{size}" unless SIZES.include?(size)
     raise ArgumentError, "ID cannot be blank" if id.blank?
