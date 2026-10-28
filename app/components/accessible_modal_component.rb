@@ -33,8 +33,6 @@ class AccessibleModalComponent < ViewComponent::Base
   end
 
   def call
-    # Evaluate the caller's block before checking its lazily captured slots.
-    content
     content_tag(:div, class: "modal-component") do
       safe_join([
         trigger_text.present? ? trigger_button(trigger_text) : nil,
@@ -92,13 +90,13 @@ class AccessibleModalComponent < ViewComponent::Base
   def modal_body
     return unless body?
 
-    content_tag(:div, class: "modal__body", id: aria_describedby) { body }
+    content_tag(:div, body.to_s, class: "modal__body", id: aria_describedby)
   end
 
   def modal_footer
     return unless footer?
 
-    content_tag(:div, class: "modal__footer") { footer }
+    content_tag(:div, footer.to_s, class: "modal__footer")
   end
 
   def close_button
