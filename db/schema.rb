@@ -1,7 +1,2 @@
-# frozen_string_literal: true
-
-require "active_record/railtie"
-ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: ":memory:")
-ActiveRecord::Schema.define do
-  # Component specs do not require persisted models.
+ActiveRecord::Schema[7.1].define(version: 0) do
 end

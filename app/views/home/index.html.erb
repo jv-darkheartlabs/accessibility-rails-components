@@ -1,0 +1,82 @@
+<header class="site-header">
+  <div class="container">
+    <p class="eyebrow">WCAG 2.1 AA · Rails 7 · ViewComponent</p>
+    <h1>Accessible Rails Components</h1>
+    <p class="lede">
+      Reusable UI components for inclusive web delivery. Drop into Rails apps to ship
+      accessible patterns without rebuilding the basics each sprint.
+    </p>
+    <p class="meta">
+      <a href="https://github.com/jv-darkheartlabs/accessibility-rails-components">GitHub</a>
+      ·
+      <a href="https://darkheartlabs.technology">darkheartlabs.technology</a>
+      ·
+      <a href="/health">Health check</a>
+    </p>
+  </div>
+</header>
+
+<main id="main" class="container">
+  <section aria-labelledby="components-heading">
+    <h2 id="components-heading">Component showcase</h2>
+
+    <article class="card">
+      <h3>Buttons</h3>
+      <p>Primary, secondary, and disabled states with explicit labels.</p>
+      <div class="demo-row">
+        <%= render AccessibleButtonComponent.new(text: "Save changes", variant: "primary") %>
+        <%= render AccessibleButtonComponent.new(text: "Cancel", variant: "secondary") %>
+        <%= render AccessibleButtonComponent.new(text: "Delete", variant: "danger") %>
+        <%= render AccessibleButtonComponent.new(text: "Unavailable", variant: "primary", disabled: true) %>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>Form field</h3>
+      <p>Associated label, hint text, and required semantics.</p>
+      <%= render AccessibleFormComponent.new(
+        label: "Email address",
+        name: "email",
+        type: "email",
+        required: true,
+        hint: "We use this for account notifications only."
+      ) %>
+    </article>
+
+    <article class="card">
+      <h3>Modal dialog</h3>
+      <p>Dialog role, labelled title, and close control.</p>
+      <%= render AccessibleModalComponent.new(
+        id: "demo-modal",
+        title: "Accessibility preferences",
+        trigger_text: "Open preferences"
+      ) do |modal| %>
+        <% modal.with_body do %>
+          <p>Choose settings that reduce cognitive load and improve keyboard navigation.</p>
+        <% end %>
+        <% modal.with_footer do %>
+          <%= render AccessibleButtonComponent.new(text: "Apply settings", variant: "primary", type: "button") %>
+        <% end %>
+      <% end %>
+    </article>
+  </section>
+
+  <section aria-labelledby="catalog-heading" class="catalog">
+    <h2 id="catalog-heading">Component catalog</h2>
+    <ul>
+      <% @components.each do |component| %>
+        <li>
+          <strong><%= component[:name] %></strong>
+          — <%= component[:description] %>
+          <code><%= component[:class_name] %></code>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Built by <a href="https://darkheartlabs.technology">Jennifer Picado</a> · WCAG 2.1 AA · Live on Render</p>
+  </div>
+</footer>

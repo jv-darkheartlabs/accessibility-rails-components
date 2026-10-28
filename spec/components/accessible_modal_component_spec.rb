@@ -11,7 +11,7 @@ RSpec.describe AccessibleModalComponent, type: :component do
     expect(page).to have_css("[role='dialog'][aria-modal='true']")
     expect(page).to have_css("#demo-modal-title", text: "Confirm action")
     expect(page).to have_css("button[aria-label='Close modal']")
-    expect(page).to have_text("Are you sure?")
+    expect(page).to have_text("Are you sure?"), rendered_content
   end
 
   it "rejects blank titles" do

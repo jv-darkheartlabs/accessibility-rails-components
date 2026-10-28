@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+  <head>
+    <title>Accessible Rails Components — Jennifer Picado</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <%= yield %>
+    <script>
+      document.addEventListener("click", (event) => {
+        const openTrigger = event.target.closest("[data-modal-open]");
+        if (openTrigger) {
+          const modalId = openTrigger.getAttribute("data-modal-open");
+          const backdrop = document.getElementById(`${modalId}-backdrop`);
+          const dialog = document.getElementById(modalId);
+          if (backdrop && dialog) {
+            backdrop.classList.add("is-open");
+            dialog.setAttribute("aria-hidden", "false");
+            dialog.focus();
+          }
+        }
+
+        const closeTrigger = event.target.closest("[data-modal-close]");
+        if (closeTrigger) {
+          const modalId = closeTrigger.getAttribute("data-modal-close");
+          const backdrop = document.getElementById(`${modalId}-backdrop`);
+          const dialog = document.getElementById(modalId);
+          if (backdrop && dialog) {
+            backdrop.classList.remove("is-open");
+            dialog.setAttribute("aria-hidden", "true");
+          }
+        }
+
+        if (event.target.classList.contains("modal-backdrop") && event.target.classList.contains("is-open")) {
+          event.target.classList.remove("is-open");
+          const dialog = event.target.querySelector(".modal");
+          if (dialog) dialog.setAttribute("aria-hidden", "true");
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        document.querySelectorAll(".modal-backdrop.is-open").forEach((backdrop) => {
+          backdrop.classList.remove("is-open");
+          const dialog = backdrop.querySelector(".modal");
+          if (dialog) dialog.setAttribute("aria-hidden", "true");
+        });
+      });
+    </script>
+  </body>
+</html>
