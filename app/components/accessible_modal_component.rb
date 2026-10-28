@@ -33,6 +33,8 @@ class AccessibleModalComponent < ViewComponent::Base
   end
 
   def call
+    # Evaluate the caller's block before checking its lazily captured slots.
+    content
     content_tag(:div, class: "modal-component") do
       safe_join([
         trigger_text.present? ? trigger_button(trigger_text) : nil,
