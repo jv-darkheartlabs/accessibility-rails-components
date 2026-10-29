@@ -1,0 +1,31 @@
+<section class="cv-example" aria-labelledby="cv-<%= panel %>-buttons">
+  <h4 id="cv-<%= panel %>-buttons">Buttons</h4>
+  <p>Try focus and pressed states. These buttons do not save or delete data.</p>
+  <div class="demo-row">
+    <% [["save", "Save changes", "primary"], ["cancel", "Cancel", "secondary"], ["delete", "Delete", "danger"]].each do |key, text, variant| %>
+      <%= render AccessibleButtonComponent.new(text: text, variant: variant, "aria-pressed": "false", "data-cv-button": key) %>
+    <% end %>
+    <%= render AccessibleButtonComponent.new(text: "Unavailable", variant: "primary", disabled: true) %>
+  </div>
+</section>
+<section class="cv-example" aria-labelledby="cv-<%= panel %>-form">
+  <h4 id="cv-<%= panel %>-form">Form validation</h4>
+  <div data-cv-form>
+    <%= render AccessibleFormComponent.new(label: "Email address", name: "cv_#{panel}_email", type: "email", required: true, hint: "Practice only. This address is not sent or saved.") %>
+    <button type="button" class="btn btn--primary cv-check" data-cv-validate disabled>Check email</button>
+    <p class="cv-validation" id="cv-<%= panel %>-validation" data-cv-validation hidden></p>
+  </div>
+</section>
+<section class="cv-example" aria-labelledby="cv-<%= panel %>-status">
+  <h4 id="cv-<%= panel %>-status">Task status</h4>
+  <ul class="cv-tasks">
+    <% [["Step one", "complete", "Complete", "✓"], ["Step two", "attention", "Needs attention", "!"], ["Step three", "failed", "Failed", "×"]].each do |step, state, label, icon| %>
+      <li><span><%= step %></span><span class="cv-status cv-status--<%= state %>"><span class="cv-status-dot" aria-hidden="true"></span><span class="cv-status-cue" aria-hidden="true"><span class="cv-status-icon"><%= icon %></span> <%= label %></span><span class="cv-sr-only"><%= label %></span></span></li>
+    <% end %>
+  </ul>
+</section>
+<section class="cv-example" aria-labelledby="cv-<%= panel %>-modal">
+  <h4 id="cv-<%= panel %>-modal">Modal dialog</h4>
+  <p>Open the shared dialog to compare its original and simulated appearance.</p>
+  <button type="button" class="btn btn--primary" data-cv-open-dialog disabled>Open preferences</button>
+</section>

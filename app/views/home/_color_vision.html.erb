@@ -1,0 +1,120 @@
+<section class="cv-demo" data-color-vision aria-labelledby="color-vision-heading">
+  <div class="cv-intro">
+    <p class="eyebrow">Explore perception · Keep meaning clear</p>
+    <h2 id="color-vision-heading">Color vision and accessible design</h2>
+    <p>Compare the same components through approximate color-vision simulations. Then change the palette and status cues to see what helps information stay clear.</p>
+    <p class="cv-note">These are teaching examples, not a test of your vision or an exact account of anyone’s experience. Controls and explanations keep their original colors.</p>
+  </div>
+
+  <noscript><p class="cv-notice">JavaScript is needed for the interactive comparisons. The original examples and explanations below are still available.</p></noscript>
+
+  <div class="cv-controls">
+    <fieldset>
+      <legend>Color-vision simulation</legend>
+      <div class="cv-choices">
+        <% [["original", "Original"], ["protanopia", "Protanopia — red-cone absence"], ["deuteranopia", "Deuteranopia — green-cone absence"], ["tritanopia", "Tritanopia — blue-cone absence"]].each do |value, label| %>
+          <label><input type="radio" name="cv-simulation" value="<%= value %>" <%= "checked" if value == "original" %> data-cv-setting="simulation" disabled> <span><%= label %></span></label>
+        <% end %>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Palette</legend>
+      <div class="cv-choices">
+        <% [["current", "Current"], ["distinct", "Distinct-color"], ["contrast", "High-contrast"]].each do |value, label| %>
+          <label><input type="radio" name="cv-palette" value="<%= value %>" <%= "checked" if value == "current" %> data-cv-setting="palette" disabled> <span><%= label %></span></label>
+        <% end %>
+      </div>
+    </fieldset>
+    <div class="cv-control-columns">
+      <fieldset>
+        <legend>Comparison layout</legend>
+        <div class="cv-choices">
+          <label><input type="radio" name="cv-layout" value="comparison" checked data-cv-setting="layout" disabled> <span>Side by side</span></label>
+          <label><input type="radio" name="cv-layout" value="single" data-cv-setting="layout" disabled> <span>Single larger demo</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Status information</legend>
+        <div class="cv-choices">
+          <label><input type="radio" name="cv-cues" value="color" data-cv-setting="cues" disabled> <span>Color only</span></label>
+          <label><input type="radio" name="cv-cues" value="words" checked data-cv-setting="cues" disabled> <span>Color + words and icons</span></label>
+        </div>
+      </fieldset>
+    </div>
+    <fieldset data-cv-single-controls hidden>
+      <legend>Single-demo appearance</legend>
+      <div class="cv-choices">
+        <label><input type="radio" name="cv-single" value="original" data-cv-setting="single" disabled> <span>Original</span></label>
+        <label><input type="radio" name="cv-single" value="simulated" checked data-cv-setting="single" disabled> <span>Simulated</span></label>
+      </div>
+    </fieldset>
+    <div class="cv-reset-row">
+      <button type="button" class="btn btn--secondary" data-cv-reset disabled>Reset demo</button>
+      <p data-cv-storage>Display choices stay in this browser. Email text is never stored.</p>
+    </div>
+  </div>
+
+  <p class="cv-swipe-hint" id="cv-scroll-hint">On a narrow screen, swipe or scroll sideways to compare both panels. You can also focus the comparison region and use the arrow keys.</p>
+  <div class="cv-scroll" tabindex="0" role="region" aria-label="Component comparison" aria-describedby="cv-scroll-hint" data-cv-scroll>
+    <div class="cv-panels" data-cv-panels>
+      <article class="cv-panel" aria-labelledby="cv-original-heading" data-cv-reference>
+        <h3 id="cv-original-heading">Original reference</h3>
+        <p class="cv-panel-note">The selected palette, without a color-vision filter.</p>
+        <div class="cv-surface" data-cv-palette="current">
+          <%= render "color_vision_examples", panel: "original" %>
+        </div>
+      </article>
+      <article class="cv-panel" aria-labelledby="cv-comparison-heading">
+        <h3 id="cv-comparison-heading" data-cv-heading>Comparison — original colors</h3>
+        <p class="cv-panel-note" data-cv-comparison-note>Choose a simulation to compare it with the original.</p>
+        <div class="cv-surface cv-filter-surface" data-cv-comparison data-cv-palette="current">
+          <%= render "color_vision_examples", panel: "comparison" %>
+        </div>
+      </article>
+    </div>
+  </div>
+  <p class="cv-notice" data-cv-announcement role="status" aria-live="polite" aria-atomic="true"></p>
+
+  <div class="cv-explanations">
+    <h3>What you are comparing</h3>
+    <p data-cv-explanation>Original shows unfiltered colors. Choose a simulation to approximate a different color-vision response.</p>
+    <p data-cv-palette-explanation>The current palette uses the showcase’s original colors. Check that text, controls and boundaries remain clear when colors become harder to distinguish.</p>
+    <p>Contrast is the difference in lightness between foreground and background. Clear contrast helps text and controls stand out; different hues alone do not guarantee it. The high-contrast option strengthens these boundaries. Text contrast is assessed using the original, unfiltered colors, separately from this simulation.</p>
+    <p>Words, icons and shapes provide information alongside color. In “Color only,” the status example deliberately removes its visible status words and icons; accessible names remain available. All other component labels stay visible.</p>
+  </div>
+
+  <div class="cv-method">
+    <h3>How the simulation works — and where it stops</h3>
+    <p>The examples use SVG color matrices in linear RGB based on the full-severity color-vision model published by Machado, Oliveira and Fernandes (2009). Protanopia and deuteranopia approximate absence of red-sensitive and green-sensitive cone responses; the tritanopia option illustrates blue–yellow changes associated with the blue-sensitive response. The model’s blue–yellow approximation is particularly limited and does not exactly reproduce tritanopia. These names describe cone responses, not simply colors that disappear.</p>
+    <p>The model transforms the colors shown on your screen. It cannot recreate another person’s vision. Perception varies, and your display, lighting and color settings also affect the result. The three full-severity examples do not cover every form or degree of color-vision difference. A simulation or palette choice cannot establish WCAG conformance; keyboard access, labels, contrast and testing with people remain necessary.</p>
+    <p>Method: <a href="https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html">Machado, Oliveira and Fernandes: A Physiologically-based Model for Simulation of Color Vision Deficiency</a>. Design guidance: <a href="https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html">W3C — use of color</a> and <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">text contrast</a>.</p>
+  </div>
+
+  <dialog class="cv-dialog" data-cv-dialog aria-labelledby="cv-dialog-heading">
+    <div class="cv-dialog-header">
+      <h3 id="cv-dialog-heading">Accessibility preferences</h3>
+      <button type="button" class="btn btn--secondary" data-cv-close-dialog autofocus>Close dialog</button>
+    </div>
+    <fieldset>
+      <legend>Dialog appearance</legend>
+      <div class="cv-choices">
+        <label><input type="radio" name="cv-dialog-view" value="original" checked data-cv-setting="dialog" disabled> <span>Original</span></label>
+        <label><input type="radio" name="cv-dialog-view" value="simulated" data-cv-setting="dialog" disabled> <span>Simulated</span></label>
+      </div>
+    </fieldset>
+    <p>One dialog serves both panels. Its appearance changes below; these controls keep their original colors.</p>
+    <div class="cv-surface cv-dialog-example" data-cv-dialog-surface data-cv-palette="current">
+      <p>Choose settings that reduce cognitive load and improve keyboard navigation.</p>
+      <p class="cv-dialog-simulation" data-cv-dialog-description>Original colors.</p>
+      <button type="button" class="btn btn--primary" data-cv-close-dialog>Apply settings and close</button>
+    </div>
+  </dialog>
+
+  <svg class="cv-filters" aria-hidden="true" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="cv-protanopia" color-interpolation-filters="linearRGB"><feColorMatrix type="matrix" values="0.152286 1.052583 -0.204868 0 0 0.114503 0.786281 0.099216 0 0 -0.003882 -0.048116 1.051998 0 0 0 0 0 1 0" /></filter>
+      <filter id="cv-deuteranopia" color-interpolation-filters="linearRGB"><feColorMatrix type="matrix" values="0.367322 0.860646 -0.227968 0 0 0.280085 0.672501 0.047413 0 0 -0.011820 0.042940 0.968881 0 0 0 0 0 1 0" /></filter>
+      <filter id="cv-tritanopia" color-interpolation-filters="linearRGB"><feColorMatrix type="matrix" values="1.255528 -0.076749 -0.178779 0 0 -0.078411 0.930809 0.147602 0 0 0.004733 0.691367 0.303900 0 0 0 0 0 1 0" /></filter>
+    </defs>
+  </svg>
+</section>
